@@ -8,7 +8,6 @@
     /* Reset cơ bản */
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* Body và font */
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(180deg, #fff8e1, #ffe0b2);
@@ -22,19 +21,19 @@
       padding: 60px 20px 40px;
       background: linear-gradient(135deg, #ffb300, #ff7043);
       color: white;
-      position: relative;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      position: relative;
     }
     header h1 {
       font-size: 3rem;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
     header p { font-size: 1.2rem; opacity: 0.95; }
 
     /* Gallery */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(2, 1fr); /* ⚡ CHỈ SỬA DÒNG NÀY để mỗi hàng 2 cột */
       gap: 30px;
       padding: 60px 20px;
       max-width: 1300px;
@@ -47,47 +46,101 @@
       background: white;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
+      display: flex;
+      flex-direction: column;
     }
     .photo:hover {
       transform: translateY(-8px) scale(1.03);
       box-shadow: 0 15px 30px rgba(0,0,0,0.3);
     }
-    .photo img {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      border-bottom: 3px solid #ffb300;
-    }
+
     .photo-info {
-      padding: 18px 20px;
+      padding: 14px 18px;
+      border-bottom: 1px solid #ffe0b2;
+      background: linear-gradient(180deg, rgba(255,243,224,0.6), transparent);
     }
-    .photo-info h3 { color: #e65100; margin-bottom: 8px; }
+    .photo-info h3 { color: #e65100; margin-bottom: 8px; font-size: 16px; }
     .photo-info p { color: #555; font-size: 0.95rem; }
 
-    /* Phần tải tài liệu */
+    .photo-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      padding: 14px 14px 22px;
+    }
+    .photo-group img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      border-bottom: 3px solid #ffb300;
+    }
+    .photo-group img:hover {
+      transform: scale(1.04);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    }
+
+    /* Tải tài liệu */
     .downloads {
       text-align: center;
       background: #fff3e0;
-      padding: 40px 20px;
+      padding: 50px 20px;
       border-top: 3px solid #ffa726;
       border-bottom: 3px solid #ffa726;
-      margin: 40px 0;
+      margin-top: 50px;
     }
-    .downloads h2 { color: #e65100; margin-bottom: 15px; }
-    .download-links a {
-      display: inline-block;
-      margin: 10px;
-      padding: 12px 25px;
-      background: linear-gradient(135deg, #ff9800, #f57c00);
-      color: white;
-      text-decoration: none;
+    .downloads h2 {
+      color: #e65100;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+    .downloads p { color: #444; margin-bottom: 30px; }
+
+    .download-item {
+      background: white;
+      border-radius: 20px;
+      padding: 15px 25px;
+      margin: 12px auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 100%;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .download-item:hover { transform: translateY(-4px); }
+
+    .file-name {
+      font-weight: 600;
+      color: #e65100;
+      text-align: left;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      padding: 8px 18px;
+      border: none;
       border-radius: 25px;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.15);
-      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: white;
+      display: inline-block;
     }
-    .download-links a:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    .btn-view {
+      background: linear-gradient(135deg, #ffa726, #fb8c00);
+    }
+    .btn-download {
+      background: linear-gradient(135deg, #f57c00, #ef6c00);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
     /* Footer */
@@ -131,7 +184,7 @@
       font-weight: bold;
     }
 
-    /* Hiệu ứng hoa rơi */
+    /* Hoa rơi */
     .flower {
       position: fixed;
       top: -10px;
@@ -145,78 +198,198 @@
     @keyframes fall {
       to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
+    @media (max-width: 768px) {
+      .gallery {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr); /* ⚡ CHỈ SỬA DÒNG NÀY để mỗi hàng 2 cột */
+      gap: 30px;
+      padding: 60px 20px;
+      max-width: 1300px;
+      margin: auto;
+    }
+    }
+    @media (max-width: 480px) {
+      .photo-group img { height: 110px; }
+      .download-item { flex-direction: column; gap: 10px; text-align: center; }
+      .buttons { justify-content: center; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <h1>BÁO TƯỜNG SƯ ĐOÀN 10</h1>
     <p>Nơi lưu giữ kỷ niệm và cảm xúc</p>
   </header>
 
-  <!-- Gallery ảnh -->
+  <!-- Gallery -->
   <section class="gallery">
+
     <div class="photo">
-      <img src="https://picsum.photos/id/1015/800/500" alt="Ảnh 1">
       <div class="photo-info">
-        <h3>I.KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ</h3>
+        <h3>I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ</h3>
+        <p>Những khoảnh khắc, hoạt động tiêu biểu.</p>
+      </div>
+      <div class="photo-group">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/546479242_839489761964314_3060640698923758314_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/546626768_839490391964251_1322338603253932969_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/548032719_3239126086248059_2170149618342656918_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/550535221_3213765032119280_901256482223194552_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/550983197_5023023527922928_7806046616098197355_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/555430715_831817362516633_4050304769376476751_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/555594691_1496076058401269_6463347306943287884_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/556085577_2736141670111021_5809213355061933174_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/z7154177982785_6e38a9fbc7013f7fb2e25ed3e787da15.jpg" alt="">
       </div>
     </div>
+
     <div class="photo">
-      <img src="https://picsum.photos/id/1015/800/500" alt="Ảnh 2">
       <div class="photo-info">
         <h3>II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG</h3>
+        <p>Ghi nhận các hoạt động lịch sử và truyền thống.</p>
+      </div>
+      <div class="photo-group">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/484916756_665134269405684_4105505446622803007_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/487765018_2758046094387546_2774730640014722155_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/489143719_1694743318590377_6604098142374659131_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/508733637_2730686187140515_2703374911452723115_n (1).jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/512723672_3633357456800058_7007603496901193091_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/513871877_122138671856423135_7160383397199170783_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/515003002_3251795781638559_970735871180298943_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/539388803_3213548125458795_8794934436294343418_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/541310504_3710738219061981_3143248696601686317_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/545421801_3719821528153650_7789858605866623759_n.jpg" alt="">
       </div>
     </div>
-    <div class="photo">
-      <img src="https://picsum.photos/id/1015/800/500" alt="Ảnh 3">
+  <div class="photo">
       <div class="photo-info">
         <h3>III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ</h3>
+        <p>Ghi nhận các hoạt động lịch sử và truyền thống.</p>
+      </div>
+      <div class="photo-group">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ẢNH MINH HỌA/z7138788891577_db0cafe03751a7ee8322ee7b7f44b1d3.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ẢNH MINH HỌA/z7142296681103_a7b1dccb924cb3478b059dbfea6a6c3e.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ẢNH MINH HỌA/z7145878605125_bc9bb5dbc289ab3ea64b20b995df3bcf.jpg" alt="">
       </div>
     </div>
-    <div class="photo">
-      <img src="https://picsum.photos/id/1015/800/500" alt="Ảnh 4">
+      <div class="photo">
       <div class="photo-info">
         <h3>IV. GƯƠNG SÁNG</h3>
+        <p>Ghi nhận các hoạt động lịch sử và truyền thống.</p>
+      </div>
+      <div class="photo-group">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142365149526_8586ae642bc21625f0987ad5ba8ed717.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142367138938_c604a8e8d89c24a571fa5dc15537f7a8.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142380480566_6552404574a3d2855d0d73d8defecf0b.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142380486645_97517c5532643c31dad14a847484ce15.jpg" alt="">
       </div>
     </div>
-    <div class="photo">
-      <img src="https://picsum.photos/id/1015/800/500" alt="Ảnh 4">
+      <div class="photo">
       <div class="photo-info">
         <h3>V. MÙA HÈ XANH TRONG TÔI</h3>
+        <p>Ghi nhận các hoạt động lịch sử và truyền thống.</p>
+      </div>
+      <div class="photo-group">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/488936740_3994729447509335_3675829498777685795_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/515436719_3156750061154111_4246170877441348001_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/518392700_769649932677496_4989289384451749966_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/520179334_122165597858441155_8072009130502293734_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/520264091_122165136194441155_3227543355773307952_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/522480246_122165501780441155_1972776784288686173_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/522735233_3149993315163119_7235992761569844916_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/525320982_3156751534487297_5026827056223247283_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/525923489_3156749941154123_5604284398726838590_n.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/526000288_3156749281154189_8184211499434171879_n.jpg"alt="">
       </div>
     </div>
-    <div class="photo">
-      <img src="https://picsum.photos/id/1015/800/500" alt="Ảnh 4">
+      <div class="photo">
       <div class="photo-info">
         <h3>VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO</h3>
+        <p>Ghi nhận các hoạt động lịch sử và truyền thống.</p>
+      </div>
+      <div class="photo-group">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP0191.JPG" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP0225.JPG" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP8594.JPG" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9316.JPG" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9339.JPG" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9380.JPG" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9520.JPG" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/z7142297087121_41e4a6f1f5eff65b5a7972b9778e51e5.jpg" alt="">
       </div>
     </div>
-    <div class="photo">
-      <img src="https://picsum.photos/id/1015/800/500" alt="Ảnh 4">
+      <div class="photo">
       <div class="photo-info">
         <h3>VII. NHỊP ĐIỆU TUỔI TRẺ</h3>
+        <p>Ghi nhận các hoạt động lịch sử và truyền thống.</p>
+      </div>
+      <div class="photo-group">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142297087121_41e4a6f1f5eff65b5a7972b9778e51e5.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142297248745_e0c32c95a65f8e72c15f0b9cda14fd3f.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142297533448_968d36d6b5413dec969a7eef9dc84fb6.jpg" alt="">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142298261823_67284bf4e4ad8c5201a46f1b8184b0d2.jpg" alt="">
+      </div>
+    </div>
+  </section>
+    </div>
+  <!-- Tài liệu -->
+  <section class="downloads">
+    <h2>Tài Liệu Báo Tường</h2>
+    <p>Xem hoặc tải về các bài viết và tài liệu của từng mục.</p>
+
+    <div class="download-item">
+      <span class="file-name">📄 I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ</span>
+      <div class="buttons">
+        <a class="btn btn-view" href="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/BÀI XÃ LUẬN.docx" target="_blank">👁️ Xem trực tiếp</a>
+        <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/BÀI XÃ LUẬN.docx" download>⬇️ Tải xuống</a>
+      </div>
+    </div>
+
+    <div class="download-item">
+      <span class="file-name">📄 II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG</span>
+      <div class="buttons">
+        <a class="btn btn-view" href="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG TÂY NGUYÊN.docx" target="_blank">👁️ Xem trực tiếp</a>
+        <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG TÂY NGUYÊN.docx" download>⬇️ Tải xuống</a>
+      </div>
+    </div>
+
+    <div class="download-item">
+      <span class="file-name">📄 III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 - CHUYỂN ĐỔI SỐ</span>
+      <div class="buttons">
+        <a class="btn btn-view" href="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ  .docx" target="_blank">👁️ Xem trực tiếp</a>
+        <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ  .docx" download>⬇️ Tải xuống</a>
+      </div>
+    </div>
+    <div class="download-item">
+      <span class="file-name">📄 IV. GƯƠNG SÁNG</span>
+      <div class="buttons">
+        <a class="btn btn-view" href="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/NGỌN LỬA TIÊN PHONG THƯỢNG ÚY PHẠM VĂN CƯƠNG VÀ KHÁT VỌNG CỦA NGƯỜI CÁN BỘ ĐOÀN.docx" target="_blank">👁️ Xem trực tiếp</a>
+        <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/NGỌN LỬA TIÊN PHONG THƯỢNG ÚY PHẠM VĂN CƯƠNG VÀ KHÁT VỌNG CỦA NGƯỜI CÁN BỘ ĐOÀN.docx" download>⬇️ Tải xuống</a>
+      </div>
+    </div>
+    <div class="download-item">
+      <span class="file-name">📄 V. MÙA HÈ XANH TRONG TÔI</span>
+      <div class="buttons">
+        <a class="btn btn-view" href="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/MÙA HÈ XANH TRONG TÔI.docx" target="_blank">👁️ Xem trực tiếp</a>
+        <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/MÙA HÈ XANH TRONG TÔI.docx" download>⬇️ Tải xuống</a>
+      </div>
+    </div>
+    <div class="download-item">
+      <span class="file-name">📄 VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO</span>
+      <div class="buttons">
+        <a class="btn btn-view" href="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4.docx" target="_blank">👁️ Xem trực tiếp</a>
+        <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4.docx" download>⬇️ Tải xuống</a>
+      </div>
+    </div>
+    <div class="download-item">
+      <span class="file-name">📄 VII. NHỊP ĐIỆU TUỔI TRẺ</span>
+      <div class="buttons">
+        <a class="btn btn-view" href="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/TRUYỀN THỐNG SƯ ĐOÀN 10.docx" target="_blank">👁️ Xem trực tiếp</a>
+        <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/TRUYỀN THỐNG SƯ ĐOÀN 10.docx" download>⬇️ Tải xuống</a>
       </div>
     </div>
   </section>
 
-  <!-- Phần tải tài liệu -->
-  <section class="downloads">
-    <h2>Tài Liệu Báo Tường</h2>
-    <p>Tải xuống các mẫu, Thư mục đẹp nhất để xem.</p>
-    <div class="download-links">
-      <a href="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/" download>📄 I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ</a>
-      <a href="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/" download>📄 II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG</a>
-      <a href="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/" download>📄 III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ</a>
-      <a href="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/" download>📄 IV. GƯƠNG SÁNG</a>
-      <a href="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/" download>📄 V. MÙA HÈ XANH TRONG TÔI</a>
-      <a href="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/" download>📄 VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO</a>
-      <a href="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/" download>📄 VII. NHỊP ĐIỆU TUỔI TRẺ</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
   <footer>
     &copy; 2025 - Báo Tường Sư Đoàn 10 | Thiết kế bởi Nhóm Sáng Tạo Trẻ ✨
   </footer>
@@ -224,13 +397,12 @@
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <span id="close">&times;</span>
-    <img id="lightbox-img" src="" alt="view">
+    <img id="lightbox-img" src="" alt="">
   </div>
 
-  <!-- Script JS -->
   <script>
     // Lightbox
-    const photos = document.querySelectorAll('.photo img');
+    const photos = document.querySelectorAll('.gallery img');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const closeBtn = document.getElementById('close');
