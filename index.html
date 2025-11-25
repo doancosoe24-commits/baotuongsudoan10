@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Báo Tường Sư Đoàn 10</title>
-  <style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<style>
     /* Reset cơ bản */
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background: linear-gradient(180deg, #fff8e1, #ffe0b2);
       color: #333;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     /* Header */
@@ -25,249 +24,255 @@
       padding: 60px 20px 40px;
       background: linear-gradient(135deg, #ffb300, #ff7043);
       color: white;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.18);
       position: relative;
     }
-    header h1 {
-      font-size: 3rem;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    }
+    header h1 { font-size: 3rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.25); }
 
-   .typing {
-       font-size: 1.2rem; opacity: 0.95; 
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-
-    .typing::after {
-      content: '';
+    .marquee { position: relative; width: 100%; overflow: hidden; white-space: nowrap; box-sizing: border-box; margin-top: 10px; }
+    .marquee span {
       display: inline-block;
-      width: 3px;
-      height: 1em;
-      background: blue;
-      animation: blink 0.7s infinite;
-      vertical-align: bottom;
-      margin-left: 2px;
+      padding-left: 100%;
+      font-size: 18px;
+      color: #fff;
+      animation: scrollText 14s linear infinite;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
-    /* Gallery */
+    @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+    /* Layout gallery */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(2, 1fr); /* ⚡ CHỈ SỬA DÒNG NÀY để mỗi hàng 2 cột */
-      gap: 30px;
-      padding: 60px 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      padding: 48px 20px;
       max-width: 1300px;
-      margin: auto;
+      margin: 0 auto;
     }
+    @media (max-width: 768px) { .gallery { grid-template-columns: 1fr; padding: 28px 12px; } }
+
     .photo {
-      position: relative;
-      border-radius: 15px;
-      overflow: hidden;
       background: white;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      opacity: 0;
+      transform: translateY(20px);
       display: flex;
       flex-direction: column;
     }
-    .photo:hover {
-      transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-    }
+    .photo.show { opacity: 1; transform: translateY(0); }
+    .photo:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(0,0,0,0.12); }
 
-    .photo-info {
-      padding: 14px 18px;
-      border-bottom: 1px solid #ffe0b2;
-      background: linear-gradient(180deg, rgba(255,243,224,0.6), transparent);
-    }
-    .photo-info h3 { color: #e65100; margin-bottom: 8px; font-size: 16px; }
-    .photo-info p { color: #555; font-size: 0.95rem; }
+    .photo-info { padding: 12px 16px; background: linear-gradient(180deg, rgba(255,243,224,0.6), transparent); border-bottom: 1px solid #ffe0b2; }
+    .photo-info h3 { color: #e65100; font-size: 16px; font-weight: 700; }
 
     .photo-group {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 10px;
-      padding: 14px 14px 22px;
+      gap: 12px;
+      padding: 14px;
     }
-    .photo-group img {
+
+    .img-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      background: transparent;
+    }
+
+    .img-box img {
       width: 100%;
       height: 140px;
       object-fit: cover;
       border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: block;
+      outline: none;
       border-bottom: 3px solid #ffb300;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: zoom-in;
     }
-    .photo-group img:hover {
-      transform: scale(1.04);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    .img-box img:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+
+    /* ===== Caption (dưới ảnh) + viền hoa chỉ quanh caption ===== */
+    .caption {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #fb8c00;
+      text-align: center;
+      display: inline-block;
+      padding: 8px 14px;
+      border: 2px solid #fb8c00;          /* viền chính */
+      border-radius: 10px;                /* bo góc */
+      background: linear-gradient(180deg, rgba(255,243,224,0.12), rgba(255,255,255,0.02));
+      font-style: italic;
+      position: relative;                 /* để pseudo-elements tham chiếu */
+      z-index: 2;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.4em;
+      max-height: 4.2em; /* 3 dòng (1.4em * 3) */
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .caption:hover { transform: translateY(-3px); box-shadow: 0 6px 14px rgba(0,0,0,0.08); }
+
+    /* Hoa/ lá trang trí TUYỆT ĐỐI CHỈ ở VIỀN caption (dùng pseudo-elements) */
+    .caption::before,
+    .caption::after {
+      content: "";
+      position: absolute;
+      width: 36px; height: 36px;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 50%;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.06));
+      opacity: 0.98;
     }
 
-    /* Tải tài liệu */
+    /* cụm hoa trái trên (ở ngoài khung caption, không che ảnh) */
+    .caption::before {
+      left: -18px;
+      top: -12px;
+      background:
+        radial-gradient(circle at 35% 30%, #ffd54f 0 26%, transparent 27%),
+        radial-gradient(circle at 70% 35%, #ffb74d 0 26%, transparent 27%),
+        radial-gradient(circle at 50% 68%, #c8e6c9 0 26%, transparent 27%);
+      transform: rotate(-14deg) scale(0.98);
+    }
+
+    /* cụm lá/hoa phải dưới */
+    .caption::after {
+      right: -18px;
+      bottom: -12px;
+      background:
+        radial-gradient(circle at 40% 35%, #c5e1a5 0 28%, transparent 29%),
+        radial-gradient(circle at 70% 60%, #aed581 0 28%, transparent 29%),
+        radial-gradient(circle at 30% 60%, #ffe082 0 24%, transparent 25%);
+      transform: rotate(12deg) scale(0.98);
+    }
+
+    /* Tăng kích thước cụm hoa cho các caption dài (responsive) */
+    @media (max-width: 480px) {
+      .caption { font-size: 0.82rem; padding: 6px 10px; border-radius: 8px; }
+      .caption::before, .caption::after { width: 30px; height: 30px; left: -14px; right: -14px; top: -10px; bottom: -10px; }
+      .img-box img { height: 110px; }
+    }
+
+    /* Downloads */
     .downloads {
       text-align: center;
       background: #fff3e0;
-      padding: 50px 20px;
+      padding: 44px 20px;
       border-top: 3px solid #ffa726;
       border-bottom: 3px solid #ffa726;
-      margin-top: 50px;
+      margin: 40px 0 60px;
     }
-    .downloads h2 {
-      color: #e65100;
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-    }
-    .downloads p { color: #444; margin-bottom: 30px; }
-
+    .downloads h2 { color: #e65100; margin-bottom: 18px; font-size: 1.6rem; }
     .download-item {
       background: white;
       border-radius: 20px;
-      padding: 15px 25px;
+      padding: 14px 20px;
       margin: 12px auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       max-width: 100%;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      transition: transform 0.28s ease;
     }
     .download-item:hover { transform: translateY(-4px); }
+    .file-name { font-weight: 600; color: #e65100; text-align: left; }
+    .buttons { display:flex; gap:10px; }
+    .btn { padding:8px 16px; border-radius:24px; text-decoration:none; color:white; font-weight:600; display:inline-block; }
+    .btn-download { background: linear-gradient(135deg,#f57c00,#ef6c00); }
+    .btn-view { background: linear-gradient(135deg,#ffa726,#fb8c00); }
 
-    .file-name {
-      font-weight: 600;
-      color: #e65100;
-      text-align: left;
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.86);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: opacity 0.22s ease;
+      z-index: 1000; padding: 24px;
     }
-    .buttons {
-      display: flex;
-      gap: 10px;
+    .lightbox.active { opacity: 1; visibility: visible; }
+    .lightbox-inner {
+      width: 100%; max-width: 1100px; max-height: 90vh;
+      display:flex; flex-direction:column; align-items:center; gap:12px;
+      position: relative;
     }
-    .btn {
-      padding: 8px 18px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.3s;
-      text-decoration: none;
-      color: white;
-      display: inline-block;
+    .lightbox img { max-width:100%; max-height: calc(90vh - 140px); border-radius: 10px; box-shadow: 0 14px 40px rgba(0,0,0,0.3); }
+    .lightbox .controls { width:100%; display:flex; justify-content:flex-end; }
+    .lightbox .close { font-size: 2rem; color: #fff; background:transparent; border:0; cursor:pointer; }
+
+    .lightbox-caption {
+      margin-top: 6px;
+      font-size: 1rem;
+      color: #fb8c00;
+      text-align: center;
+      padding: 10px 18px;
+      border: 2px solid #fb8c00;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,243,224,0.12), rgba(255,255,255,0.01));
+      font-weight: 700;
+      position: relative;
+      transform: translateY(-3px); box-shadow: 0 6px 14px rgba(0,0,0,0.08);
     }
-    .btn-view {
-      background: linear-gradient(135deg, #ffa726, #fb8c00);
+
+    /* Hoa/ lá trang trí TUYỆT ĐỐI CHỈ ở VIỀN caption (dùng pseudo-elements) */
+    .lightbox-caption::before,
+    .lightbox-caption::after {
+      content: "";
+      position: absolute;
+      width: 36px; height: 36px;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 50%;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.06));
+      opacity: 0.98;
     }
-    .btn-download {
-      background: linear-gradient(135deg, #f57c00, #ef6c00);
+
+    /* cụm hoa trái trên (ở ngoài khung caption, không che ảnh) */
+    .lightbox-caption::before {
+      left: -18px;
+      top: -12px;
+      background:
+        radial-gradient(circle at 35% 30%, #ffd54f 0 26%, transparent 27%),
+        radial-gradient(circle at 70% 35%, #ffb74d 0 26%, transparent 27%),
+        radial-gradient(circle at 50% 68%, #c8e6c9 0 26%, transparent 27%);
+      transform: rotate(-14deg) scale(0.98);
     }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+    /* cụm lá/hoa phải dưới */
+    .lightbox-caption::after {
+      right: -18px;
+      bottom: -12px;
+      background:
+        radial-gradient(circle at 40% 35%, #c5e1a5 0 28%, transparent 29%),
+        radial-gradient(circle at 70% 60%, #aed581 0 28%, transparent 29%),
+        radial-gradient(circle at 30% 60%, #ffe082 0 24%, transparent 25%);
+      transform: rotate(12deg) scale(0.98);
     }
+
 
     /* Footer */
     footer {
       text-align: center;
-      padding: 40px 10px;
+      padding: 36px 10px;
       background: #e65100;
       color: white;
       font-size: 1rem;
-      margin-top: 60px;
-      box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+      margin-top: 30px;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
     }
 
-    /* Lightbox */
-    .lightbox {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.3s ease;
-      z-index: 1000;
-    }
-    .lightbox.active { opacity: 1; visibility: visible; }
-    .lightbox img {
-      max-width: 90%;
-      max-height: 80%;
-      border-radius: 10px;
-      box-shadow: 0 0 25px rgba(255,255,255,0.4);
-    }
-    .lightbox span {
-      position: absolute;
-      top: 25px;
-      right: 35px;
-      font-size: 2.5rem;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* Hoa rơi */
-    .flower {
-      position: fixed;
-      top: -10px;
-      width: 20px; height: 20px;
-      background: radial-gradient(circle at center, #ffb300 40%, transparent 60%);
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: fall linear infinite;
-      z-index: 10;
-    }
-    @keyframes fall {
-      to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-    }
-    @media (max-width: 768px) {
-      .gallery {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr); /* ⚡ CHỈ SỬA DÒNG NÀY để mỗi hàng 2 cột */
-      gap: 30px;
-      padding: 60px 20px;
-      max-width: 1300px;
-      margin: auto;
-    }
-    }
-    @media (max-width: 480px) {
-      .photo-group img { height: 110px; }
-      .download-item { flex-direction: column; gap: 10px; text-align: center; }
-      .buttons { justify-content: center; }
-    }
-
-    /* ----- Vùng chứa chạy chữ ----- */
-    .marquee {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      box-sizing: border-box;
-    }
-
-    /* ----- Dòng chữ ----- */
-    .marquee span {
-      display: inline-block;
-      padding-left: 100%;
-      font-size: 20px;
-      color: #fff;
-      animation: scrollText 12s linear infinite;
-    }
-
-    /* ----- Hiệu ứng chạy ngang ----- */
-    @keyframes scrollText {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-
-    /* ----- Thêm hiệu ứng bóng chữ cho đẹp ----- */
-    .marquee span {
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    /* ----- (Tuỳ chọn) chạy ngược lại mỗi vòng ----- */
-    .marquee.reverse span {
-      animation-direction: alternate;
-    }
+    /* small helpers */
+    .sr-only { position: absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
   </style>
 </head>
 <body>
@@ -275,8 +280,8 @@
   <header>
     <h1 class="animate__animated animate__bounceInDown">BÁO TƯỜNG SƯ ĐOÀN 10</h1>
     <div class="marquee">
-    <span>Nơi lưu giữ dấu ấn: "Khát Vọng - Xung Kích - Sáng Tạo"</span>
-  </div>
+      <span>Nơi lưu giữ dấu ấn: "Khát Vọng - Xung Kích - Sáng Tạo"</span>
+    </div>
   </header>
 
   <!-- Gallery -->
@@ -285,109 +290,242 @@
     <div class="photo">
       <div class="photo-info">
         <h3>I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ</h3>
-    
       </div>
       <div class="photo-group">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/546479242_839489761964314_3060640698923758314_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/546626768_839490391964251_1322338603253932969_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/548032719_3239126086248059_2170149618342656918_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/550535221_3213765032119280_901256482223194552_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/550983197_5023023527922928_7806046616098197355_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/555430715_831817362516633_4050304769376476751_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/555594691_1496076058401269_6463347306943287884_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/556085577_2736141670111021_5809213355061933174_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/z7154177982785_6e38a9fbc7013f7fb2e25ed3e787da15.jpg" alt="" loading="lazy">
+        <div class="img-box">
+          <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/546479242_839489761964314_3060640698923758314_n.jpg" alt="Ảnh minh họa 1" loading="lazy">
+          <p class="caption">Ảnh: Cán bộ, chiến sĩ Trung đoàn chào đón Phó Ban Thanh niên quân đội và thủ trưởng các cấp đến dự Đại hội Đại biểu Đoàn cơ sơ Trung đoàn.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/546626768_839490391964251_1322338603253932969_n.jpg" alt="Ảnh minh họa 2" loading="lazy">
+        <p class="caption">Ảnh: Văn nghệ chào mừng Đại hội Đại biểu ĐCS Trung đoàn.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/548032719_3239126086248059_2170149618342656918_n.jpg" alt="Ảnh minh họa 3" loading="lazy">
+        <p class="caption">Ảnh: Đại hội Đại biểu Đoàn Cơ sở Trung đoàn 66 thành công tốt đẹp.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/555430715_831817362516633_4050304769376476751_n.jpg" alt="Ảnh minh họa 7" loading="lazy">
+        <p class="caption">Ảnh: Đại hội Đại biểu Đoàn Cơ sở Tiểu đoàn 18 thành công tốt đẹp.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/550983197_5023023527922928_7806046616098197355_n.jpg" alt="Ảnh minh họa 5" loading="lazy">
+        <p class="caption">Ảnh: Phát huy dân chủ của cán bộ, đoàn viên trong Đại hội Đoàn các cấp.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/550535221_3213765032119280_901256482223194552_n.jpg" alt="Ảnh minh họa 4" loading="lazy">
+        <p class="caption">Ảnh: Phát huy dân chủ của cán bộ, đoàn viên trong Đại hội Đoàn các cấp.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/555594691_1496076058401269_6463347306943287884_n.jpg" alt="Ảnh minh họa 8" loading="lazy">
+        <p class="caption">Ảnh: Đại hội Đại biểu Đoàn Cơ sở Tiểu đoàn 16 thành công tốt đẹp.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/556085577_2736141670111021_5809213355061933174_n.jpg" alt="Ảnh minh họa 9" loading="lazy">
+        <p class="caption">Ảnh: Đại hội Đoàn Cơ sở Phòng Hậu cần – Kỹ thuật thành công tốt đẹp.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/I. KHÁT VỌNG BƯỚC VÀO KỶ NGUYÊN VƯƠN MÌNH CỦA TUỔI TRẺ ĐOÀN ĐẮK TÔ/ẢNH MINH HỌA/z7154177982785_6e38a9fbc7013f7fb2e25ed3e787da15.jpg" alt="Ảnh minh họa 10" loading="lazy">
+        <p class="caption">Cán bộ, chiến sĩ Tiểu đoàn 18 tích cực tham gia công cuộc “ chuyển đổi số”</p>
+        </div>
       </div>
     </div>
 
     <div class="photo">
       <div class="photo-info">
         <h3>II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG</h3>
-    
       </div>
       <div class="photo-group">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/484916756_665134269405684_4105505446622803007_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/487765018_2758046094387546_2774730640014722155_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/489143719_1694743318590377_6604098142374659131_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/508733637_2730686187140515_2703374911452723115_n (1).jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/512723672_3633357456800058_7007603496901193091_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/513871877_122138671856423135_7160383397199170783_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/515003002_3251795781638559_970735871180298943_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/539388803_3213548125458795_8794934436294343418_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/541310504_3710738219061981_3143248696601686317_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/545421801_3719821528153650_7789858605866623759_n.jpg" alt="" loading="lazy">
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/484916756_665134269405684_4105505446622803007_n.jpg" alt="Trang sử 1" loading="lazy">
+          <p class="caption">Ảnh: Phó Tư lệnh, TMT quân đoàn kiểm tra công tác chuẩn bị huấn luyện</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/487765018_2758046094387546_2774730640014722155_n.jpg" alt="Trang sử 2" loading="lazy">
+        <p class="caption">Ảnh: : Hoạt động tri ân các anh hùng liệt sỹ trong ngày 27/7</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/489143719_1694743318590377_6604098142374659131_n.jpg" alt="Trang sử 3" loading="lazy">
+        <p class="caption">Ảnh: Trao hoa bắn giỏi cho chiến sĩ mới</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/508733637_2730686187140515_2703374911452723115_n (1).jpg" alt="Trang sử 4" loading="lazy">
+        <p class="caption">Ảnh: Đại hội Đại biểu Đảng bộ Sư đoàn 10 lần thứ XIV</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/512723672_3633357456800058_7007603496901193091_n.jpg" alt="Trang sử 5" loading="lazy">
+        <p class="caption">Ảnh: Công tác Huấn luyện, sẵn sàng chiến đấu tại các đơn vị trong Sư đoàn.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/513871877_122138671856423135_7160383397199170783_n.jpg" alt="Trang sử 6" loading="lazy">
+        <p class="caption">Ảnh: Công tác Huấn luyện, sẵn sàng chiến đấu tại các đơn vị trong Sư đoàn.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/515003002_3251795781638559_970735871180298943_n.jpg" alt="Trang sử 7" loading="lazy">
+        <p class="caption">Ảnh: Diễn tập vòng tổng hợp tại Trường bắn quốc gia Khu vực 2.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/539388803_3213548125458795_8794934436294343418_n.jpg" alt="Trang sử 8" loading="lazy">
+        <p class="caption">Ảnh: Trao Huy hiệu 30 năm tuổi Đảng cho SQ, QNCN trong đơn vị</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/541310504_3710738219061981_3143248696601686317_n.jpg" alt="Trang sử 9" loading="lazy">
+        <p class="caption">Ảnh: : Chính ủy Sư đoàn kiểm tra công tác Sẵn sàng chiến đấu tại đơn vị</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/II. SƯ ĐOÀN 10 VỚI NHỮNG TRANG SỬ HÀO HÙNG/ẢNH MINH HỌA/545421801_3719821528153650_7789858605866623759_n.jpg" alt="Trang sử 10" loading="lazy">
+        <p class="caption">Ảnh: Lễ ra quân huấn luyện tại Trung đoàn 66.</p>
+        </div>
       </div>
     </div>
-  <div class="photo">
+    <div class="photo">
       <div class="photo-info">
         <h3>III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ</h3>
+      </div>
+      <div class="photo-group">
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ẢNH MINH HỌA/z7138788891577_db0cafe03751a7ee8322ee7b7f44b1d3.jpg" alt="Đoàn 24 - 1" loading="lazy">
+        <p class="caption">Ảnh: Chỉ huy Trung đoàn 24, Sư đoàn 10 và đoàn viên xây dựng dữ liệu Đại hội không giấy</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ẢNH MINH HỌA/z7142296681103_a7b1dccb924cb3478b059dbfea6a6c3e.jpg" alt="Đoàn 24 - 2" loading="lazy">
+        <p class="caption">Ảnh: Lãnh đạo Quân đoàn 34 và Ban Thanh niên Quân đội tham quan mô hình "Vườn ươm số" tại đại hội Đoàn Cơ sở Trung đoàn 24, Sư đoàn 10</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ẢNH MINH HỌA/z7145878605125_bc9bb5dbc289ab3ea64b20b995df3bcf.jpg" alt="Đoàn 24 - 3" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Tiểu đoàn 6, Trung đoàn 24, tích cực tham gia mô hình "Bình dân học vụ số"</p>
+        </div>
+      </div>
+    </div>
 
-      </div>
+    <div class="photo">
+      <div class="photo-info"><h3>IV. GƯƠNG SÁNG</h3></div>
       <div class="photo-group">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ẢNH MINH HỌA/z7138788891577_db0cafe03751a7ee8322ee7b7f44b1d3.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ẢNH MINH HỌA/z7142296681103_a7b1dccb924cb3478b059dbfea6a6c3e.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ẢNH MINH HỌA/z7145878605125_bc9bb5dbc289ab3ea64b20b995df3bcf.jpg" alt="" loading="lazy">
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142365149526_8586ae642bc21625f0987ad5ba8ed717.jpg" alt="Gương sáng 1" loading="lazy">
+        <p class="caption">Ảnh: Đại hội đoàn cơ sở Trung đoàn 24 nhiệm kỳ 2025-2030</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142367138938_c604a8e8d89c24a571fa5dc15537f7a8.jpg" alt="Gương sáng 2" loading="lazy">
+        <p class="caption">Ảnh: Đại hội đoàn cơ sở Trung đoàn 24 nhiệm kỳ 2025-2030</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142380480566_6552404574a3d2855d0d73d8defecf0b.jpg" alt="Gương sáng 3" loading="lazy">
+        <p class="caption">Đ/c Thượng úy Phạm Văn Cương - Phó Bí thư đoàn Cơ sở Trung đoàn 24, Sư đoàn 10 tham dự lễ tuyên dương thanh niên tiên tiến làm theo lời Bác lần thứ VIII năm 2025</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142380486645_97517c5532643c31dad14a847484ce15.jpg" alt="Gương sáng 4" loading="lazy">
+        <p class="caption">Đ/c Thượng úy Phạm Văn Cương - Phó Bí thư đoàn Cơ sở Trung đoàn 24, Sư đoàn 10 tham dự lễ tuyên dương thanh niên tiên tiến làm theo lời Bác lần thứ VIII năm 2025</p>
+        </div>
       </div>
     </div>
-      <div class="photo">
-      <div class="photo-info">
-        <h3>IV. GƯƠNG SÁNG</h3>
-     
-      </div>
-      <div class="photo-group">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142365149526_8586ae642bc21625f0987ad5ba8ed717.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142367138938_c604a8e8d89c24a571fa5dc15537f7a8.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142380480566_6552404574a3d2855d0d73d8defecf0b.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/ẢNH MINH HỌA/z7142380486645_97517c5532643c31dad14a847484ce15.jpg" alt="" loading="lazy">
-      </div>
-    </div>
-      <div class="photo">
-      <div class="photo-info">
-        <h3>V. MÙA HÈ XANH TRONG TÔI</h3>
 
-      </div>
+    <div class="photo">
+      <div class="photo-info"><h3>V. MÙA HÈ XANH TRONG TÔI</h3></div>
       <div class="photo-group">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/488936740_3994729447509335_3675829498777685795_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/515436719_3156750061154111_4246170877441348001_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/518392700_769649932677496_4989289384451749966_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/520179334_122165597858441155_8072009130502293734_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/520264091_122165136194441155_3227543355773307952_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/522480246_122165501780441155_1972776784288686173_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/522735233_3149993315163119_7235992761569844916_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/525320982_3156751534487297_5026827056223247283_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/525923489_3156749941154123_5604284398726838590_n.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/526000288_3156749281154189_8184211499434171879_n.jpg"alt="" loading="lazy">
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/488936740_3994729447509335_3675829498777685795_n.jpg" alt="Mùa hè xanh 1" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Trung đoàn 66 chung sức xây dựng nông thôn mới.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/515436719_3156750061154111_4246170877441348001_n.jpg" alt="Mùa hè xanh 2" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Trung đoàn 24 hành quân, dã ngoại làm công tác dân vận.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/518392700_769649932677496_4989289384451749966_n.jpg" alt="Mùa hè xanh 3" loading="lazy">
+        <p class="caption">Ảnh: : CB,CS Trung đoàn 24 hành quân, dã ngoại làm công tác dân vận.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/520179334_122165597858441155_8072009130502293734_n.jpg" alt="Mùa hè xanh 4" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Trung đoàn 66 hành quân, dã ngoại làm công tác dân vận.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/520264091_122165136194441155_3227543355773307952_n.jpg" alt="Mùa hè xanh 5" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Trung đoàn 66 hành quân, dã ngoại làm công tác dân vận.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/522480246_122165501780441155_1972776784288686173_n.jpg" alt="Mùa hè xanh 6" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Trung đoàn 66 hành quân, dã ngoại làm công tác dân vận.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/522735233_3149993315163119_7235992761569844916_n.jpg" alt="Mùa hè xanh 7" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Trung đoàn 24 hành quân, dã ngoại làm công tác dân vận.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/525320982_3156751534487297_5026827056223247283_n.jpg" alt="Mùa hè xanh 8" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Trung đoàn 24 hành quân, dã ngoại làm công tác dân vận.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/525923489_3156749941154123_5604284398726838590_n.jpg" alt="Mùa hè xanh 9" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Trung đoàn 24 hành quân, dã ngoại làm công tác dân vận.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/ẢNH MINH HỌA/526000288_3156749281154189_8184211499434171879_n.jpg" alt="Mùa hè xanh 10" loading="lazy">
+        <p class="caption">Ảnh: CB,CS Trung đoàn 24 hành quân, dã ngoại làm công tác dân vận.</p>
+        </div>
       </div>
     </div>
-      <div class="photo">
+
+    <div class="photo">
       <div class="photo-info">
-        <h3>VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO</h3>
-    
+        <h3>VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4</h3>
       </div>
       <div class="photo-group">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP0191.JPG" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP0225.JPG" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP8594.JPG" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9316.JPG" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9339.JPG" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9380.JPG" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9520.JPG" alt="" loading="lazy">
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP0191.JPG" alt="Pháo binh 1" loading="lazy">
+        <p class="caption">Ảnh: : Trung đoàn Pháo binh 4 phát huy tốt các Tổ chức quần chúng trong đơn vị.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP0225.JPG" alt="Pháo binh 2" loading="lazy">
+        <p class="caption">Ảnh: Trung đoàn Pháo binh 4 phát huy tốt các Tổ chức quần chúng trong đơn vị.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP8594.JPG" alt="Pháo binh 3" loading="lazy">
+        <p class="caption">Ảnh: Duy trì nghiêm chế độ kiểm tra trong các hoạt động của đơn vị.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9316.JPG" alt="Pháo binh 4" loading="lazy">
+        <p class="caption">Ảnh: Duy trì có nền nếp công tác giáo dục chính trị tư tưởng tại đơn vị</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9339.JPG" alt="Pháo binh 5" loading="lazy">
+        <p class="caption">Ảnh: : Đơn vị làm tốt công tác cán bộ</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9380.JPG" alt="Pháo binh 6" loading="lazy">
+        <p class="caption">Ảnh: Tích cực tham gia các cuộc thi trực tuyến</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/ẢNH MINH HỌA/IMGP9520.JPG" alt="Pháo binh 7" loading="lazy">
+        <p class="caption">Ảnh: : Tổ chức đánh giá, xếp loại chất lượng Đảng viên đúng  thủ tục, nguyên tắc.</p>
+        </div>
       </div>
     </div>
-      <div class="photo">
-      <div class="photo-info">
-        <h3>VII. NHỊP ĐIỆU TUỔI TRẺ</h3>
-   
-      </div>
+
+    <div class="photo">
+      <div class="photo-info"><h3>VII. NHỊP ĐIỆU TUỔI TRẺ</h3></div>
       <div class="photo-group">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142297087121_41e4a6f1f5eff65b5a7972b9778e51e5.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142297248745_e0c32c95a65f8e72c15f0b9cda14fd3f.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142297533448_968d36d6b5413dec969a7eef9dc84fb6.jpg" alt="" loading="lazy">
-        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142298261823_67284bf4e4ad8c5201a46f1b8184b0d2.jpg" alt="" loading="lazy">
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142297087121_41e4a6f1f5eff65b5a7972b9778e51e5.jpg" alt="Nhịp điệu 1" loading="lazy">
+        <p class="caption">Ảnh: Huấn luyện bắn súng STV380 cho đối tượng chiến sĩ mới</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142297248745_e0c32c95a65f8e72c15f0b9cda14fd3f.jpg" alt="Nhịp điệu 2" loading="lazy">
+        <p class="caption">Ảnh: Thủ trưởng Sư đoàn kiểm tra công tác chuẩn bị huấn luyện tại Trung đoàn 24</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142297533448_968d36d6b5413dec969a7eef9dc84fb6.jpg" alt="Nhịp điệu 3" loading="lazy">
+        <p class="caption">Ảnh: Thủ trườn Bộ Tư lệnh Quân đoàn thăm, kiểm tra công tác giáo dục chính trị, tư tưởng tại Trung đoàn 24.</p>
+        </div>
+        <div class="img-box">
+        <img src="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/ẢNH MINH HỌA/z7142298261823_67284bf4e4ad8c5201a46f1b8184b0d2.jpg" alt="Nhịp điệu 4" loading="lazy">
+        <p class="caption">Ảnh: Phó Chủ tịch nước Võ Thị Ánh Xuân thăm và làm việc tại Trung đoàn 24</p>
+        </div>
       </div>
     </div>
+
   </section>
-    </div>
+
   <!-- Tài liệu -->
   <section class="downloads">
     <h2>Tài Liệu Báo Tường</h2>
@@ -413,59 +551,140 @@
         <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/III. ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ/ĐOÀN CƠ SỞ TRUNG ĐOÀN 24 TIÊN PHONG TRONG CHUYỂN ĐỔI SỐ  .docx" download>👁️ Xem</a>
       </div>
     </div>
+
     <div class="download-item">
       <span class="file-name">📄 IV. GƯƠNG SÁNG</span>
       <div class="buttons">
         <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/IV. GƯƠNG SÁNG/NGỌN LỬA TIÊN PHONG THƯỢNG ÚY PHẠM VĂN CƯƠNG VÀ KHÁT VỌNG CỦA NGƯỜI CÁN BỘ ĐOÀN.docx" download>👁️ Xem</a>
       </div>
     </div>
+
     <div class="download-item">
       <span class="file-name">📄 V. MÙA HÈ XANH TRONG TÔI</span>
       <div class="buttons">
         <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/V. MÙA HÈ XANH TRONG TÔI/MÙA HÈ XANH TRONG TÔI.docx" download>👁️ Xem</a>
       </div>
     </div>
+
     <div class="download-item">
-      <span class="file-name">📄 VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO</span>
+      <span class="file-name">📄 VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4</span>
       <div class="buttons">
         <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/VI. TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4 THI ĐUA RÈN ĐỨC, LUYỆN TÀI, XUNG KÍCH, SÁNG TẠO/TUỔI TRẺ ĐOÀN CƠ SỞ TRUNG ĐOÀN PHÁO BINH 4.docx" download>👁️ Xem</a>
       </div>
     </div>
+
     <div class="download-item">
       <span class="file-name">📄 VII. NHỊP ĐIỆU TUỔI TRẺ</span>
       <div class="buttons">
         <a class="btn btn-download" href="./BÁO TƯỜNG SƯ ĐOÀN 10/VII. NHỊP ĐIỆU TUỔI TRẺ/TRUYỀN THỐNG SƯ ĐOÀN 10.docx" download>👁️ Xem</a>
       </div>
     </div>
+
   </section>
 
   <footer>
     &copy; 2025 - Báo Tường Sư Đoàn 10 | Thiết kế bởi Nhóm Sáng Tạo Trẻ ✨
   </footer>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <span id="close">&times;</span>
-    <img id="lightbox-img" src="" alt="">
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Xem ảnh">
+    <div class="lightbox-inner" id="lightbox-inner">
+      <div class="controls">
+        <button class="close" id="lightbox-close" aria-label="Đóng">&times;</button>
+      </div>
+      <img id="lightbox-img" src="" alt="Ảnh lớn">
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
   </div>
 
   <script>
-    // Lightbox
-    const photos = document.querySelectorAll('.gallery img');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const closeBtn = document.getElementById('close');
+    // Hiệu ứng ảnh xuất hiện từ dưới lên
+    const photos = document.querySelectorAll('.photo');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.18 });
+    photos.forEach(photo => observer.observe(photo));
 
-    photos.forEach(img => {
-      img.addEventListener('click', () => {
-        lightbox.classList.add('active');
-        lightboxImg.src = img.src;
+    // Lightbox: mở / đóng + caption
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbCaption = document.getElementById('lightbox-caption');
+    const lbClose = document.getElementById('lightbox-close');
+
+    function extractFilenameCaption(src) {
+      try {
+        const parts = src.split('/');
+        let name = parts[parts.length - 1] || src;
+        name = name.replace(/\.\w{1,5}$/, ''); // bỏ đuôi file
+        name = name.replace(/[_-]+/g, ' ');
+        return name;
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function openLightbox(src, caption = "") {
+      lbImg.src = src;
+      lbImg.alt = caption || extractFilenameCaption(src);
+      lbCaption.textContent = caption || extractFilenameCaption(src);
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      // focus for accessibility
+      lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      // clear src to free memory
+      lbImg.src = '';
+      lbCaption.textContent = '';
+    }
+
+    // Click ảnh: tự động lấy caption: ưu tiên data-caption -> .caption liền kề -> alt -> tên file
+    function onGalleryImageClick(event) {
+      const img = event.currentTarget;
+      const dataCaption = img.getAttribute('data-caption');
+      const fromSiblingCaption = img.closest('.img-box')?.querySelector('.caption')?.textContent?.trim();
+      const altText = img.alt?.trim();
+      const caption = dataCaption || fromSiblingCaption || altText || '';
+      openLightbox(img.src, caption);
+    }
+
+    // Gắn sự kiện cho tất cả ảnh trong gallery
+    const galleryImgs = document.querySelectorAll('.photo-group img, .img-box img');
+    galleryImgs.forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', onGalleryImageClick);
+      // cho accessibility: Enter/Space cũng kích hoạt
+      img.setAttribute('tabindex', '0');
+      img.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onGalleryImageClick({ currentTarget: img });
+        }
       });
     });
 
-    closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
-    lightbox.addEventListener('click', e => {
-      if (e.target === lightbox) lightbox.classList.remove('active');
+    // Đóng khi click nút đóng
+    lbClose.addEventListener('click', closeLightbox);
+
+    // Đóng khi click nền (ngoài inner)
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // Đóng bằng ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
     });
 
     // Hoa rơi
@@ -479,10 +698,10 @@
     };
     setInterval(createFlower, 400);
 
-   const vietchu =()=>{
-     let addViet = document.querySelectorAll('.viet');
+    // Nếu muốn gắn caption tuỳ ý: bạn có thể thêm attribute data-caption vào tag <img>
+    // ví dụ: <img src="..." data-caption="Đây là caption mong muốn" ...>
+
     
-   }
   </script>
 </body>
 </html>
